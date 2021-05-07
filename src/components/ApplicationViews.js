@@ -3,8 +3,10 @@ import { Route } from "react-router-dom"
 import { EventProvider } from "./event/EventProvider"
 import { EventList } from "./event/EventList"
 import { GameList } from "./game/GameList"
+import { GameForm } from "./game/GameForm"
 import { GameProvider } from "./game/GameProvider"
 import { EventForm } from "./event/EventForm"
+
 
 export const ApplicationViews = () => {
     return <>
@@ -15,6 +17,9 @@ export const ApplicationViews = () => {
             <GameProvider>
                 <Route exact path="/">
                     <GameList />
+                </Route>
+                <Route exact path="/games/new">
+                    <GameForm />
                 </Route>
             </GameProvider>
 

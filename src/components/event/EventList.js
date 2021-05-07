@@ -12,7 +12,9 @@ export const EventList = (props) => {
         <article className="events">
             <header className="events__header">
                 <h1>Level Up Game Events</h1>
-                <button onClick={() => props.history.push('/events/create')}>Create New Event</button>
+                <button 
+                    className="btn btn-2 btn-primary"
+                    onClick={() => props.history.push('/events/create')}>Create New Event</button>
             </header>
             {
                 events.map(event => {

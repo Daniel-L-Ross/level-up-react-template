@@ -16,7 +16,6 @@ export const EventProvider = (props) => {
     }
     
     const createEvent = newEvent => {
-        debugger
         return fetch("http://localhost:8000/events", {
             method: "POST",
             headers:{
