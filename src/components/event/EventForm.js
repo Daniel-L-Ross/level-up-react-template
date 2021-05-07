@@ -9,7 +9,12 @@ export const EventForm = (props) => {
     const { events, getEvents, createEvent } = useContext(EventContext)
     const { games, getGames } = useContext(GameContext)
 
-    const [currentEvent, setEvent] = useState({})
+    const [currentEvent, setEvent] = useState({
+        gameId: 0,
+        date: "",
+        time: "",
+        description: ""
+    })
 
     useEffect(() => {
         getGames()
@@ -79,7 +84,7 @@ export const EventForm = (props) => {
                 </div>
             </fieldset>
 
-            <button type="submit">Create Event</button>
+            <button className="btn btn-2 btn-primary" type="submit">Create Event</button>
         </form>
     )
 }
