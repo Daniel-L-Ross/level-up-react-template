@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { EventContext } from "./EventProvider.js"
 import { GameContext } from "../game/GameProvider"
+import "./Event.css"
 
-
-export const EventForm = () => {
+export const EventForm = (props) => {
     const history = useHistory()
     const { events, getEvents, createEvent } = useContext(EventContext)
     const { games, getGames } = useContext(GameContext)
@@ -34,6 +34,7 @@ export const EventForm = () => {
                 time: currentEvent.time,
                 description: currentEvent.description
             })
+            props.history.push('/events')
         }
     }
 
