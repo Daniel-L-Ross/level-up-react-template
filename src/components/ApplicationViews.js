@@ -24,10 +24,11 @@ export const ApplicationViews = () => {
                         <EventList history={props.history} />
                     </>
                 }} />
-
-                <Route exact path="/events/create" render={(props) => {
-                    return <EventForm {...props}/>
-                }} />
+                <GameProvider>
+                    <Route exact path="/events/create" render={(props) => {
+                        return <EventForm {...props} />
+                    }} />
+                </GameProvider>
             </EventProvider>
         </main>
     </>
