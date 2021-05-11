@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from "react"
 import { GameContext } from "./GameProvider.js"
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 
 export const GameForm = () => {
     const history = useHistory()
     const { createGame, getGenres, genres } = useContext(GameContext)
+
+    const { gameId } = useParams()
 
     const [currentGame, setCurrentGame] = useState({
         skillLevel: 1,
