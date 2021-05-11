@@ -5,9 +5,11 @@ import { useHistory, useParams } from 'react-router-dom'
 
 export const GameForm = () => {
     const history = useHistory()
-    const { createGame, getGenres, genres } = useContext(GameContext)
+    const { createGame, getGenres, genres, getSingleGame, updateGame } = useContext(GameContext)
 
     const { gameId } = useParams()
+
+    const [isLoading, setIsLoading] = useState(true)
 
     const [currentGame, setCurrentGame] = useState({
         skillLevel: 1,
@@ -18,8 +20,25 @@ export const GameForm = () => {
     })
 
     useEffect(() => {
-        getGenres()
+        getGenres().then(() => {
+            if (gameId) {
+                getSingleGame(gameId)
+                    .then(game => setCurrentGame({
+                        skillLevel: game.skill_level,
+                        numberOfPlayers: game.number_of_players,
+                        title: game.title,
+                        maker: game.maker,
+                        genreId: game.genre.id,
+                        id: game.id
+                    }),
+                        setIsLoading(false)
+                    )
+            } else {
+                setIsLoading(false)
+            }
+        })
     }, [])
+
 
     const changeGameState = event => {
         const newGameState = { ...currentGame }
@@ -29,6 +48,7 @@ export const GameForm = () => {
 
     const handleClickSaveGame = event => {
         event.preventDefault()
+        setIsLoading(true)
 
         const game = {
             maker: currentGame.maker,
@@ -37,14 +57,19 @@ export const GameForm = () => {
             skillLevel: parseInt(currentGame.skillLevel),
             genreId: parseInt(currentGame.genreId)
         }
-
-        createGame(game)
+        if (gameId) {
+            game.id = currentGame.id
+            updateGame(game)
             .then(() => history.push("/"))
+        } else {
+            createGame(game)
+                .then(() => history.push("/"))
+        }
     }
 
     return (
         <form className="gameForm" onSubmit={handleClickSaveGame}>
-            <h2 className="gameForm__title">Register New Game</h2>
+            <h2 className="gameForm__title">{gameId ? "Edit Game" : "Register New Game"}</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
@@ -102,7 +127,9 @@ export const GameForm = () => {
                 </div>
             </fieldset>
 
-            <button type="submit" className="btn btn-2 btn-primary">Create</button>
+            <button className="btn btn-2 btn-primary"
+                type="submit"
+                disabled={isLoading}>{gameId ? "Update" : "Create"}</button>
         </form>
     )
 }
