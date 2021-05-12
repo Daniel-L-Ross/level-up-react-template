@@ -34,6 +34,7 @@ export const EventList = (props) => {
                             }
                             @ {event.time}
                         </div>
+                        <div>Attendance Count: {event.attendees_count}</div>
                         {
                             event.joined
                                 ? <button className="btn btn-3"
